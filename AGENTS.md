@@ -179,3 +179,17 @@ Docs accompany every code change: update affected README and JSDoc contracts tog
 ## Vendoring policy
 
 `vendor/` packages are pinned source copies (manifest with upstream SHAs in [vendor/README.md](vendor/README.md)). Update via the sync procedure there; re-apply or retire the logged local modifications; rerun `pnpm run test && pnpm run build`.
+
+## Agent 技能
+
+### 工单跟踪器
+
+工单写在本仓 GitHub Issues，用 `gh` 读写。详见 `docs/agents/issue-tracker.md`。
+
+### 分拣标签
+
+五个角色标签为 `待分拣`、`待补充`、`可交Agent`、`需人工`、`不做`，分类标签为 `缺陷`、`增强`。详见 `docs/agents/triage-labels.md`。
+
+### 领域文档
+
+单限界：根目录一份 `GLOSSARY.md`，架构决策记在 `docs/adr/`。详见 `docs/agents/domain.md`。

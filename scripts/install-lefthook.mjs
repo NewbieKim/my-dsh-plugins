@@ -308,6 +308,13 @@ function installLockStat(lockPath) {
   }
 }
 
+function lockFileIdentityMatches(ownedStat, currentStat) {
+  if (currentStat.ino !== ownedStat.ino) return false
+  // Windows lstat often reports dev=0 while fstat of the same handle reports a volume serial.
+  if (process.platform === 'win32') return true
+  return currentStat.dev === ownedStat.dev
+}
+
 function parseInstallLock(record) {
   const match = /^([1-9]\d*) ([0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12})\n$/i.exec(record)
   if (match === null) return undefined
@@ -348,8 +355,7 @@ function releaseInstallLock(lockPath, ownedRecord, ownedStat) {
     currentStat === undefined
     || !currentStat.isFile()
     || currentStat.isSymbolicLink()
-    || currentStat.dev !== ownedStat.dev
-    || currentStat.ino !== ownedStat.ino
+    || !lockFileIdentityMatches(ownedStat, currentStat)
     || readInstallLock(lockPath) !== ownedRecord
   ) {
     throw lockOwnershipChangedError(lockPath)
@@ -409,8 +415,7 @@ async function acquireInstallLock(commonDirectory) {
         publishedStat === undefined
         || !publishedStat.isFile()
         || publishedStat.isSymbolicLink()
-        || publishedStat.dev !== ownedStat.dev
-        || publishedStat.ino !== ownedStat.ino
+        || !lockFileIdentityMatches(ownedStat, publishedStat)
       ) {
         throw lockOwnershipChangedError(lockPath)
       }
