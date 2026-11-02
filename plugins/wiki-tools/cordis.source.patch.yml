@@ -1,0 +1,7 @@
+# Source patch for `pnpm dsh web --patch plugins/wiki-tools/cordis.source.patch.yml`.
+# Resolves the workspace package so Host and Client halves load from source/types
+# after `pnpm --filter dsh-wiki-tools build` emits `lib/client.js`.
+
+- insert:
+    - id: wiki-tools
+      name: dsh-wiki-tools
