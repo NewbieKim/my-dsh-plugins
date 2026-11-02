@@ -1,0 +1,23 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "outDir": "lib/types",
+    "tsBuildInfoFile": "lib/tsconfig.host.tsbuildinfo"
+  },
+  "files": [
+    "src/index.ts",
+    "src/probe.ts",
+    "src/routes.ts",
+    "src/types.ts",
+    "src/workspace-root.ts"
+  ],
+  "references": [
+    { "path": "../../vendor/cordis" },
+    { "path": "../../vendor/schemastery" },
+    { "path": "../../packages/core/session" },
+    { "path": "../../packages/session/session-persistence" },
+    { "path": "../../packages/workspace/workspace" },
+    { "path": "../../packages/client/connection/tsconfig.host.json" }
+  ]
+}
